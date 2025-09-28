@@ -1,5 +1,18 @@
 const socket = io();
 
+// 調試連線狀態
+socket.on('connect', () => {
+  console.log('Socket.IO 連線成功');
+});
+
+socket.on('disconnect', () => {
+  console.log('Socket.IO 連線斷開');
+});
+
+socket.on('connect_error', (error) => {
+  console.error('Socket.IO 連線錯誤:', error);
+});
+
 const authSection = document.getElementById('auth-section');
 const passwordInput = document.getElementById('password');
 const loginButton = document.getElementById('login');
@@ -8,6 +21,7 @@ const loginStatus = document.getElementById('login-status');
 const dashboard = document.getElementById('dashboard');
 const sessionStatus = document.getElementById('session-status');
 const adminCount = document.getElementById('admin-count');
+const userCount = document.getElementById('user-count');
 const adminTimer = document.getElementById('admin-timer');
 const perMinute = document.getElementById('per-minute');
 const stateText = document.getElementById('state-text');
@@ -56,12 +70,13 @@ const stopTimer = () => {
   updateTimer();
 };
 
-const updatePerMinute = (count, elapsedMs) => {
-  if (elapsedMs === 0) {
+const updatePerMinute = (count, elapsedMs, userCount) => {
+  if (elapsedMs === 0 || userCount === 0) {
     perMinute.textContent = '0.0';
     return;
   }
-  const perMinuteValue = count / (elapsedMs / 60000);
+  // 計算平均每人每分鐘分心次數
+  const perMinuteValue = (count / userCount) / (elapsedMs / 60000);
   perMinute.textContent = perMinuteValue.toFixed(1);
 };
 
@@ -69,8 +84,10 @@ const renderState = (state) => {
   running = state.running;
   elapsed = state.elapsed;
 
+  console.log('收到狀態更新:', state);
   adminCount.textContent = state.count;
-  updatePerMinute(state.count, state.elapsed);
+  userCount.textContent = state.userCount;
+  updatePerMinute(state.count, state.elapsed, state.userCount);
 
   if (running) {
     sessionStatus.classList.remove('stopped');
