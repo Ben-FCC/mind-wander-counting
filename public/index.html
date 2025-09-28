@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mind Wander Counter</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script defer src="/socket.io/socket.io.js"></script>
+    <script defer src="/js/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Mind Wander 計數器</h1>
+        <p class="description">覺得注意力飄走了就輕觸一次，下方會自動更新所有人的統計。</p>
+      </header>
+
+      <div id="status" class="status-badge">
+        <span id="status-text">等待開始中</span>
+      </div>
+
+      <section class="stats">
+        <div class="stat-card">
+          <div class="stat-label">累計次數</div>
+          <div id="count" class="stat-value">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">進行時間</div>
+          <div id="timer" class="stat-value">00:00</div>
+        </div>
+      </section>
+
+      <button id="increment" class="primary" disabled>我分心了</button>
+
+      <p class="footer-note">由管理員控制開始與結束。任何裝置都可以即時同步。</p>
+    </main>
+  </body>
+</html>

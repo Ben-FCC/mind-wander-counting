@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mind Wander 管理後台</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script defer src="/socket.io/socket.io.js"></script>
+    <script defer src="/js/admin.js"></script>
+  </head>
+  <body>
+    <main class="admin">
+      <header>
+        <h1>管理後台</h1>
+        <p class="description">輸入密碼以控制全場的計時與分心統計。</p>
+      </header>
+
+      <section id="auth-section" class="card">
+        <h2>管理員登入</h2>
+        <div class="form-group">
+          <label for="password">密碼</label>
+          <input type="password" id="password" placeholder="請輸入管理密碼" />
+        </div>
+        <button id="login" class="primary">登入</button>
+        <p id="login-status" class="hint"></p>
+      </section>
+
+      <section id="dashboard" class="card hidden">
+        <div class="badge-group">
+          <div id="session-status" class="status-badge stopped">已暫停</div>
+          <div class="badge">累計人次：<span id="admin-count">0</span></div>
+          <div class="badge">總計時：<span id="admin-timer">00:00</span></div>
+        </div>
+
+        <div class="controls">
+          <button id="start" class="primary">開始</button>
+          <button id="stop" class="outline">暫停</button>
+          <button id="reset" class="ghost">重置</button>
+        </div>
+
+        <div class="insight">
+          <h2>即時概覽</h2>
+          <ul>
+            <li><strong>平均每分鐘分心：</strong><span id="per-minute">0</span></li>
+            <li><strong>當前狀態：</strong><span id="state-text">已暫停，請按下「開始」</span></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
