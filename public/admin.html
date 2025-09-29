@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/admin.css" />
     <script defer src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
     <script defer src="/js/admin.js"></script>
   </head>
   <body>
@@ -38,6 +40,7 @@
           <button id="start" class="primary">開始</button>
           <button id="stop" class="outline">暫停</button>
           <button id="reset" class="ghost">重置</button>
+          <button id="statistics" class="secondary">檢定（指標：每分鐘分心次數）</button>
         </div>
 
         <div class="insight">
@@ -46,6 +49,17 @@
             <li><strong>平均每人每分鐘分心：</strong><span id="per-minute">0</span></li>
             <li><strong>當前狀態：</strong><span id="state-text">已暫停，請按下「開始」</span></li>
           </ul>
+        </div>
+
+        <div id="statistics-section" class="card hidden">
+          <h2>統計檢定結果</h2>
+          <div id="chart-container">
+            <canvas id="statistics-chart"></canvas>
+          </div>
+          <div id="test-results">
+            <h3>One-tail t-test 結果</h3>
+            <div id="test-output"></div>
+          </div>
         </div>
       </section>
     </main>

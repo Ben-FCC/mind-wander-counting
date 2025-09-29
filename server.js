@@ -153,6 +153,40 @@ app.get('/admin', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
+// 統計數據 API 端點
+app.get('/api/statistics', (_req, res) => {
+  try {
+    const elapsedMs = getElapsedMilliseconds();
+    
+    if (elapsedMs === 0 || state.userCount === 0) {
+      return res.json({
+        error: '沒有足夠的數據進行統計分析（需要計時時間和使用者數量）'
+      });
+    }
+    
+    // 計算每分鐘分心次數
+    const perMinuteRate = (state.count / state.userCount) / (elapsedMs / 60000);
+    
+    // 為了演示目的，我們使用一個假設的標準差
+    // 在實際應用中，這應該基於歷史數據或更多樣本
+    const perMinuteStd = Math.max(0.05, perMinuteRate * 0.3); // 假設變異係數為 30%
+    
+    res.json({
+      perMinuteRate: perMinuteRate,
+      perMinuteStd: perMinuteStd,
+      userCount: state.userCount,
+      totalCount: state.count,
+      elapsedMs: elapsedMs,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('統計數據計算錯誤:', error);
+    res.status(500).json({
+      error: '統計數據計算失敗'
+    });
+  }
+});
+
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Mind wander counter running on port ${port}`);

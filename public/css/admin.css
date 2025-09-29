@@ -41,7 +41,8 @@ main.admin {
 }
 
 button.outline,
-button.ghost {
+button.ghost,
+button.secondary {
   display: block;
   width: 100%;
   padding: 16px;
@@ -74,6 +75,16 @@ button.ghost {
   border: 2px solid rgba(148, 163, 184, 0.6);
   background: transparent;
   color: #475569;
+}
+
+button.secondary {
+  border: 2px solid #8b5cf6;
+  background: transparent;
+  color: #8b5cf6;
+}
+
+button.secondary:active {
+  transform: scale(0.97);
 }
 
 .badge-group {
@@ -111,6 +122,37 @@ button.ghost {
   align-items: center;
 }
 
+#chart-container {
+  margin: 20px 0;
+  position: relative;
+  height: 400px;
+}
+
+#chart-container canvas {
+  max-height: 100%;
+}
+
+#test-results {
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+#test-results h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #1e293b;
+}
+
+#test-output {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
 @media (max-width: 600px) {
   .badge-group {
     flex-direction: column;
@@ -118,7 +160,12 @@ button.ghost {
   }
 
   button.outline,
-  button.ghost {
+  button.ghost,
+  button.secondary {
     font-size: 1rem;
+  }
+
+  #chart-container {
+    height: 300px;
   }
 }
